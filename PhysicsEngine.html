@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>PhysicsEngine</title>
+</head>
+<body>
+<canvas id="myCanvas" width="800" height="700"
+style="border:1px solid #000000;">
+</canvas>
+ <script type="text/javascript" src="Ball.js"></script>
+<script>
+	var canvas = document.getElementById("myCanvas");
+	var ctx = canvas.getContext("2d");
+	var flag = false;
+	var t = 0.005;
+	var error = 1;
+	var fluidDensity = 0.00001;//0.00001//5 or 6 zeros is good for air
+	var gravity = 0;//1000 is a good number
+	//add rolling/sliding friction
+	//add air resistance/ top down friction
+
+	var paused = false;
+
+	document.addEventListener("keydown", keyDownHandler, false);
+	document.addEventListener("keyup", keyUpHandler, false);
+
+	function keyDownHandler(e) {
+	    if(e.keyCode == 71) {
+	       gravity = (gravity - 1000) * -1;
+	    }
+	    if(e.keyCode == 80){
+	    	paused = !paused;
+	    }
+	}
+	function keyUpHandler(e) {
+
+	}
+
+	var objects = [new ball(100, 100, 16, 100, 25, 10, 0.9, 1, 2, "#FF0000", true, true), new ball(400, 400, 16, -100, -100, 10, 0.9, 1, 2, "#00FF00", true, true) , new ball(450, 700, 8, -200, -400, 5, 0.9, 1, 2, "#0000FF", true, true), new ball(500, 500, 16, -100, -100, 10, 0.9, 1, 2, "#FFFF00", true, true), new ball(600, 700, 16, -300, 250, 10, 0.9, 1, 2, "#FF00FF", true, true), new ball(500, 700, 16, -300, 100, 10, 0.9, 1, 2, "#00FFFF", true, true), new ball(400, 600, 32, 300, -50, 25, 0.9, 1, 2, "#000000", true, true), new ball(300, 300, 64, 0, 0, 10, 0.9, 1, 2, "#000000", true, false)];
+	//var objects = [new ball(100, 400, 16, 0, 0, 5, 0.9, 1, 2, "#FF0000", true), new ball(400, 100, 16, -100, 100, 5, 0.9, 1, 2, "#00FF00", true)];//45degrees
+	//var objects = [new ball(100, 100, 16, 100, 0, 5, 0.9, 1, 2, "#FF0000", true), new ball(400, 100, 16, 0, 0, 5, 0.9, 1, 2, "#00FF00", true)];//Horizontal
+	//var objects = [new ball(100, 100, 16, 0, 100, 5, 0.9, 1, 2, "#FF0000", true), new ball(100, 400, 16, 0, 0, 5, 0.9, 1, 2, "#00FF00", true)];//Vertical
+	//var objects = [new ball(100.0, 100.0, 16, 100.0, 50.0, 5, 0.9, 1, 2, "#FF0000", true), new ball(500.0, 300.0, 16, 0.0, 0.0, 5, 0.9, 1, 2, "#00FF00", true)];
+
+	function step(){
+		if(!paused){
+			for(i = 0; i < objects.length; i++){
+				objects[i].update();
+			}
+			for(i = 0; i < objects.length; i++){
+				for(j = i + 1; j < objects.length; j++){
+					if(Math.sqrt(Math.pow(objects[i].x - objects[j].x, 2) + Math.pow(objects[i].y - objects[j].y, 2)) < objects[i].r + objects[j].r && !flag){
+						objects[i].collide(objects[j]);
+						flag = false;
+					}
+				}
+			}
+		}
+	}
+	function draw(){
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		for(i = 0; i < objects.length; i++){
+			objects[i].show();
+		}
+		requestAnimationFrame(draw);
+	}
+	setInterval(step, 1000*t);
+	requestAnimationFrame(draw);
+</script>
+</body>
+</html>
