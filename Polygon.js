@@ -1,21 +1,31 @@
-class ball{
-	constructor(x, y, r, xspeed, yspeed, m, elasticity, drag, rollingResistance, colour, walls, movable){//Change to use magnitue and direction as it much easier
+class polygon{
+	constructor(x, y, angle, vertex, xspeed, yspeed, angularVelocity, m, rotationalInertia, elasticity, drag, friction, colour, walls, movable){//Change to use magnitue and direction as it much easier
 		this.x = x;
 		this.y = y;
-		this.r = r;
+		this.angle = angle;
+		this.r = 0;
+		for(i = 0; i < vertex[DIRECTION].length; i++){
+			if(vertex[DISTANCE][i] > this.r){
+				this.r = vertex[DISTANCE][i];
+			}
+		}
 		this.xspeed = xspeed;
 		this.yspeed = yspeed;
+		this.angularVelocity = angularVelocity;
 		this.m = m;
+		this.rotationalInertia = rotationalInertia;
 		this.elasticity = elasticity;
 		this.drag = drag;
-		this.rollingResistance = rollingResistance;
+		this.friction = friction;
 		this.colour = colour;
 		this.walls = walls;
 		this.movable = movable;
 		this.update = this.update.bind(this);
 		this.show = this.show.bind(this);
 		this.collide = this.collide.bind(this);
+		}
 	}
+
 	update(){
 		//check for a collission
 		if(this.walls){
@@ -42,12 +52,10 @@ class ball{
 		if(!this.yspeed){
 			this.yspeed = 0;
 		}
-		if(this.y === canvas.height - this.r){
-			this.xspeed = this.xspeed - this.xspeed * this.rollingResistance / this.m * t;
-		}
 		if(this.movable){
 			this.x = this.x + this.xspeed * t;
 			this.y = this.y + this.yspeed * t + t * t / 2 * gravity;
+			this.angle = this.angle + this.angularVelocity;
 			this.yspeed = this.yspeed + gravity * t;
 			this.xspeed = this.xspeed - Math.sign(this.xspeed) * Math.pow(this.xspeed, 2) * Math.pow(this.r, 2) * fluidDensity * this.drag / this.m * t;
 		}
@@ -58,8 +66,11 @@ class ball{
 	}
 	show(){
 		ctx.beginPath();
-		ctx.arc(this.x, this.y, this.r, 0, Math.PI*2, false);
 		ctx.fillStyle = this.colour;
+		ctx.moveTo(x + Math.cos(vertex[DIRECTION][0] + angle) * vertex[DISTANCE][0], y + Math.sin(vertex[DIRECTION][0] + angle) * vertex[DISTANCE][0]);
+		for(i = 1; i < vertex[DIRECTION].length; i++){
+			ctx.lineTo(x + Math.cos(vertex[DIRECTION][i] + angle) * vertex[DISTANCE][i], y + Math.sin(vertex[DIRECTION][i] + angle) * vertex[DISTANCE][i]);
+		}
 		ctx.fill();
 		ctx.closePath();
 	}

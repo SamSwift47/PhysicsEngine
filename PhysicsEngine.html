@@ -8,6 +8,7 @@
 style="border:1px solid #000000;">
 </canvas>
  <script type="text/javascript" src="Ball.js"></script>
+ <script type="text/javascript" src="Polygon.js"></script>
 <script>
 	var canvas = document.getElementById("myCanvas");
 	var ctx = canvas.getContext("2d");
@@ -36,7 +37,8 @@ style="border:1px solid #000000;">
 
 	}
 
-	var objects = [new ball(100, 100, 16, 100, 25, 10, 0.9, 1, 2, "#FF0000", true, true), new ball(400, 400, 16, -100, -100, 10, 0.9, 1, 2, "#00FF00", true, true) , new ball(450, 700, 8, -200, -400, 5, 0.9, 1, 2, "#0000FF", true, true), new ball(500, 500, 16, -100, -100, 10, 0.9, 1, 2, "#FFFF00", true, true), new ball(600, 700, 16, -300, 250, 10, 0.9, 1, 2, "#FF00FF", true, true), new ball(500, 700, 16, -300, 100, 10, 0.9, 1, 2, "#00FFFF", true, true), new ball(400, 600, 32, 300, -50, 25, 0.9, 1, 2, "#000000", true, true), new ball(300, 300, 64, 0, 0, 10, 0.9, 1, 2, "#000000", true, false)];
+	var objects = [new polygon(100, 100, 0, vertex, 50, 50, 10, 10, 10, 1, 2, 0, #FF0000, true, true)]
+	//var objects = [new ball(100, 100, 16, 100, 25, 10, 0.9, 1, 2, "#FF0000", true, true), new ball(400, 400, 16, -100, -100, 10, 0.9, 1, 2, "#00FF00", true, true) , new ball(450, 700, 8, -200, -400, 5, 0.9, 1, 2, "#0000FF", true, true), new ball(500, 500, 16, -100, -100, 10, 0.9, 1, 2, "#FFFF00", true, true), new ball(600, 700, 16, -300, 250, 10, 0.9, 1, 2, "#FF00FF", true, true), new ball(500, 700, 16, -300, 100, 10, 0.9, 1, 2, "#00FFFF", true, true), new ball(400, 600, 32, 300, -50, 25, 0.9, 1, 2, "#000000", true, true), new ball(300, 300, 64, 0, 0, 10, 0.9, 1, 2, "#000000", true, false)];
 	//var objects = [new ball(100, 400, 16, 0, 0, 5, 0.9, 1, 2, "#FF0000", true), new ball(400, 100, 16, -100, 100, 5, 0.9, 1, 2, "#00FF00", true)];//45degrees
 	//var objects = [new ball(100, 100, 16, 100, 0, 5, 0.9, 1, 2, "#FF0000", true), new ball(400, 100, 16, 0, 0, 5, 0.9, 1, 2, "#00FF00", true)];//Horizontal
 	//var objects = [new ball(100, 100, 16, 0, 100, 5, 0.9, 1, 2, "#FF0000", true), new ball(100, 400, 16, 0, 0, 5, 0.9, 1, 2, "#00FF00", true)];//Vertical
