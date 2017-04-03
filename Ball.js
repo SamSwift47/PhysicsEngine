@@ -1,10 +1,14 @@
 class ball{
 	constructor(x, y, r, xspeed, yspeed, m, elasticity, drag, rollingResistance, colour, walls, movable){//Change to use magnitue and direction as it much easier
 		this.x = x;
+		this.xPrevious = this.x;
 		this.y = y;
+		this.yPrevious = this.y;
 		this.r = r;
 		this.xspeed = xspeed;
+		this.xspeedPrevious = this.xspeed;
 		this.yspeed = yspeed;
+		this.yspeedPrevious = this.yspeed;
 		this.m = m;
 		this.elasticity = elasticity;
 		this.drag = drag;
@@ -18,21 +22,26 @@ class ball{
 	}
 	update(){
 		//check for a collission
+		this.xPrevious = this.x;
+		this.yPrevious = this.y;
+		this.xspeedPrevious = this.xspeed;
+		this.yspeedPrevious = this.yspeed;
+
 		if(this.walls){
 			if(this.x < this.r && this.xspeed < 0){
-				this.xspeed = -this.xspeed * Math.sqrt(this.elasticity);
+				this.xspeed = -this.xspeed * Math.sqrt(this.elasticity * wallElasticity);
 				this.x = this.r;
 			}
 			if(this.y < this.r && this.yspeed < 0){
-				this.yspeed = Math.sqrt(Math.pow(this.yspeed * this.elasticity, 2) + 2 * -gravity * (this.y - this.r));
+				this.yspeed = Math.sqrt(Math.pow(this.yspeed * this.elasticity, 2 * wallElasticity) + 2 * -gravity * (this.y - this.r));
 				this.y = this.r;
 			}
 			if(this.x > canvas.width - this.r && this.xspeed > 0){
-				this.xspeed = -this.xspeed * Math.sqrt(this.elasticity);
+				this.xspeed = -this.xspeed * Math.sqrt(this.elasticity * wallElasticity);
 				this.x = canvas.width - this.r;
 			}
 			if(this.y > canvas.height - this.r && this.yspeed > 0){
-				this.yspeed = -Math.sqrt(Math.pow(this.yspeed * this.elasticity, 2) - 2 * gravity * (this.y - canvas.height + this.r));//v2^2 = v1^2 + 2ad
+				this.yspeed = -Math.sqrt(Math.pow(this.yspeed * this.elasticity * wallElasticity, 2) - 2 * gravity * (this.y - canvas.height + this.r));//v2^2 = v1^2 + 2ad
 				this.y = canvas.height - this.r;
 			}
 		}
@@ -46,9 +55,9 @@ class ball{
 			this.xspeed = this.xspeed - this.xspeed * this.rollingResistance / this.m * t;
 		}
 		if(this.movable){
-			this.x = this.x + this.xspeed * t;
-			this.y = this.y + this.yspeed * t + t * t / 2 * gravity;
-			this.yspeed = this.yspeed + gravity * t;
+			this.x = this.x + this.xspeed * t  - Math.sign(this.xspeed) * Math.pow(this.xspeed, 2) * Math.pow(this.r, 2) * fluidDensity * this.drag / this.m / 2 * t * t;
+			this.y = this.y + this.yspeed * t + t * t / 2 * gravity - Math.sign(this.yspeed) * Math.pow(this.yspeed, 2) * Math.pow(this.r, 2) * fluidDensity * this.drag / this.m / 2 * t * t;
+			this.yspeed = this.yspeed + gravity * t - Math.sign(this.yspeed) * Math.pow(this.yspeed, 2) * Math.pow(this.r, 2) * fluidDensity * this.drag / this.m * t;
 			this.xspeed = this.xspeed - Math.sign(this.xspeed) * Math.pow(this.xspeed, 2) * Math.pow(this.r, 2) * fluidDensity * this.drag / this.m * t;
 		}
 		//console.log("x: " + this.x);
@@ -64,7 +73,17 @@ class ball{
 		ctx.closePath();
 	}
 	collide(object){
-		//Determine colision location and time if you want to be more accurate
+		//Determine: tRemaining, aX, aY, bX, bY, aXspeed, aYspeed, bXspeed, bYspeed colision location and time if you want to be more accurate		
+		//x = v1t + 1/2*a*t^2
+		//dy = v1t + 1/2*a*t^2
+		//at point of colision Math.sqrt((aX - bX)^2 + (aY - bY)^2) = r
+		//ax = get the equations in terms of t
+		//ay =
+		//bx = 
+		//by =
+		//time to colision = 
+		//var tRemaining = 1 - (time to colision);
+
 		console.log("There has been a colision.");
 		console.log("Ball A's Position is (" + this.x + ", " + this.y + ")");
 		console.log("Ball B's Position is (" + object.x + ", " + object.y + ")");
