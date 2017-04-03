@@ -1,5 +1,8 @@
+var DIRECTION = 0;
+var DISTANCE = 1;
+
 class polygon{
-	constructor(x, y, angle, vertex, xspeed, yspeed, angularVelocity, m, rotationalInertia, elasticity, drag, friction, colour, walls, movable){//Change to use magnitue and direction as it much easier
+	constructor(x, y, angle, vertex, xspeed, yspeed, angularVelocity, m, rotationalInertia, elasticity, drag, friction, colour, walls, movable){
 		this.x = x;
 		this.y = y;
 		this.angle = angle;
