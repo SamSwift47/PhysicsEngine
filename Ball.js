@@ -112,7 +112,7 @@ class ball{
 		//(this.m * (Math.pow(Va1ll, 2) + Math.pow(Va1X, 2)) + object.m * (Math.pow(Vb1ll, 2) + Math.pow(Vb1X, 2)) = this.m * (Math.pow(Va2ll, 2) + Math.pow(Va2X, 2)) + object.m * (Math.pow(Vb2ll, 2) + Math.pow(Vb2X, 2))
 		if(this.movable && object.movable){
 			var a = (object.m + Math.pow(object.m, 2) / this.m);
-			var b = -(2 * Va1ll * object.m + 2 * Math.pow(object.m, 2) * Vb1ll / this.m)
+			var b = -(2 * Va1ll * object.m + 2 * Math.pow(object.m, 2) * Vb1ll / this.m);
 			var c = -this.m * (Math.pow(Va1ll, 2) + Math.pow(Va1X, 2)) - object.m * (Math.pow(Vb1ll, 2) + Math.pow(Vb1X, 2)) + object.m * Math.pow(Vb2X, 2) + this.m * Math.pow(Va1ll, 2) + 2 * object.m * Vb1ll * Va1ll + Math.pow(object.m, 2) * Math.pow(Vb1ll, 2) / this.m;
 
 			console.log("B a: " + a);
@@ -128,7 +128,7 @@ class ball{
 			}
 
 			a = (this.m + Math.pow(this.m, 2) / object.m);
-			b = -(2 * Vb1ll * this.m + 2 * Math.pow(this.m, 2) * Va1ll / object.m)
+			b = -(2 * Vb1ll * this.m + 2 * Math.pow(this.m, 2) * Va1ll / object.m);
 			c = -object.m * (Math.pow(Vb1ll, 2) + Math.pow(Vb1X, 2)) - this.m * (Math.pow(Va1ll, 2) + Math.pow(Va1X, 2)) + this.m * Math.pow(Va2X, 2) + object.m * Math.pow(Vb1ll, 2) + 2 * this.m * Va1ll * Vb1ll + Math.pow(this.m, 2) * Math.pow(Va1ll, 2) / object.m;
 
 			console.log("A a: " + a);
